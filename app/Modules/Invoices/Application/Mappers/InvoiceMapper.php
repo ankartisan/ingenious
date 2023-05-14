@@ -17,6 +17,14 @@ class InvoiceMapper
 {
     public static function fromEloquent(InvoiceEloquentModel $invoiceEloquent): Invoice
     {
+        $products = new InvoiceProducts(array_map(function ($invoiceProduct) {
+            return InvoiceProductMapper::fromArray($invoiceProduct);
+        }, $invoiceEloquent->products->toArray()));
+
+        $total_price = new TotalPrice(array_map(function ($invoiceProduct) {
+            return InvoiceProductMapper::fromArray($invoiceProduct);
+        }, $invoiceEloquent->products->toArray()));
+
         return new Invoice(
             id: Uuid::fromString($invoiceEloquent->id),
             invoice_number: $invoiceEloquent->number,
@@ -24,12 +32,8 @@ class InvoiceMapper
             due_date: new DueDate($invoiceEloquent->due_date),
             company: CompanyMapper::fromEloquent($invoiceEloquent->company),
             billed_company: CompanyMapper::fromEloquent($invoiceEloquent->company),
-            products: new InvoiceProducts(array_map(function ($invoiceProduct) {
-                return InvoiceProductMapper::fromArray($invoiceProduct);
-            }, $invoiceEloquent->products->toArray())),
-            total_price: new TotalPrice(array_map(function ($invoiceProduct) {
-                return InvoiceProductMapper::fromArray($invoiceProduct);
-            }, $invoiceEloquent->products->toArray())),
+            products: $products,
+            total_price: $total_price,
             status: Status::from($invoiceEloquent->status)
         );
     }

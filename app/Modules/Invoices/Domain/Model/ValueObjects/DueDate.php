@@ -6,15 +6,20 @@ namespace App\Modules\Invoices\Domain\Model\ValueObjects;
 
 class DueDate
 {
-    private \DateTime $dueDate;
+    private \DateTime $value;
 
     public function __construct(string $date)
     {
-        $this->dueDate = new \DateTime($date);
+        $this->value = new \DateTime($date);
+    }
+
+    public function jsonSerialize(): string
+    {
+        return $this->value->format("m/d/Y");
     }
 
     public function __toString(): string
     {
-        return $this->dueDate->format("m/d/Y");
+        return $this->value->format("m/d/Y");
     }
 }

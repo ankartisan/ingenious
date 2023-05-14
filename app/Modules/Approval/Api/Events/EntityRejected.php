@@ -6,7 +6,7 @@ namespace App\Modules\Approval\Api\Events;
 
 use App\Modules\Approval\Api\Dto\ApprovalDto;
 
-final readonly class EntityRejected
+final class EntityRejected
 {
     public function __construct(
         public ApprovalDto $approvalDto

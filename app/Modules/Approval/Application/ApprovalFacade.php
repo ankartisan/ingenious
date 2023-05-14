@@ -12,14 +12,14 @@ use App\Modules\Approval\Api\Events\EntityRejected;
 use Illuminate\Contracts\Events\Dispatcher;
 use LogicException;
 
-final readonly class ApprovalFacade implements ApprovalFacadeInterface
+final class ApprovalFacade implements ApprovalFacadeInterface
 {
     public function __construct(
         private Dispatcher $dispatcher
     ) {
     }
 
-    public function approve(ApprovalDto $dto): true
+    public function approve(ApprovalDto $dto)
     {
         $this->validate($dto);
         $this->dispatcher->dispatch(new EntityApproved($dto));
@@ -27,7 +27,7 @@ final readonly class ApprovalFacade implements ApprovalFacadeInterface
         return true;
     }
 
-    public function reject(ApprovalDto $dto): true
+    public function reject(ApprovalDto $dto)
     {
         $this->validate($dto);
         $this->dispatcher->dispatch(new EntityRejected($dto));

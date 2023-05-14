@@ -7,6 +7,7 @@ namespace App\Modules\Invoices\Application\Http;
 use App\Domain\Enums\StatusEnum;
 use App\Modules\Approval\Api\ApprovalFacadeInterface;
 use App\Modules\Approval\Api\Dto\ApprovalDto;
+use App\Modules\Invoices\Application\Resources\InvoiceResource;
 use App\Modules\Invoices\Domain\Repositories\InvoiceRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -27,7 +28,7 @@ class InvoiceController
     {
         $invoice = $this->repository->findById($id);
 
-        return view('invoice', compact('invoice'));
+        return new InvoiceResource($invoice);
     }
 
     public function approve(string $id): JsonResponse

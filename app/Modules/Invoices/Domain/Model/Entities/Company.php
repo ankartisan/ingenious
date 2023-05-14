@@ -13,6 +13,7 @@ class Company
         public string $city,
         public string $zip_code,
         public string $phone,
+        public string $email
     ) {}
 
     public function toArray(): array
@@ -24,6 +25,7 @@ class Company
             'city' => $this->city,
             'zip_code' => $this->zip_code,
             'phone' => $this->phone,
+            'email' => $this->email
         ];
     }
 }

@@ -17,7 +17,8 @@ class CompanyMapper
             street_address: $companyEloquent->street,
             city: $companyEloquent->city,
             zip_code: $companyEloquent->zip,
-            phone: $companyEloquent->phone
+            phone: $companyEloquent->phone,
+            email: $companyEloquent->email
         );
     }
 

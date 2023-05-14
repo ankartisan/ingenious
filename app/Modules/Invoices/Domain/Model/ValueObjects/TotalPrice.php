@@ -8,17 +8,22 @@ use App\Modules\Invoices\Domain\Model\Entities\InvoiceProduct;
 
 class TotalPrice
 {
-    public float $totalPrice;
+    private float $value;
 
     public function __construct(array $invoiceProducts)
     {
-        $this->totalPrice = collect($invoiceProducts)->reduce(function (?int $carry, InvoiceProduct $invoiceProduct) {
+        $this->value = collect($invoiceProducts)->reduce(function (?int $carry, InvoiceProduct $invoiceProduct) {
             return $carry + ($invoiceProduct->product->price * $invoiceProduct->quantity);
         });
     }
 
+    public function jsonSerialize(): float
+    {
+        return $this->value;
+    }
+
     public function __toString(): string
     {
-        return (string) $this->totalPrice;
+        return (string) $this->value;
     }
 }
